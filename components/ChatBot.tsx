@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
 import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -33,24 +32,27 @@ const ChatBot: React.FC = () => {
 
     try {
         // Initialize Gemini Client
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-        
-        // Use generateContent with system instruction
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: [
-                ...messages.map(m => ({
-                    role: m.role,
-                    parts: [{ text: m.text }]
-                })),
-                { role: 'user', parts: [{ text: userMessage }]}
-            ],
-            config: {
+        const response = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                messages,
+                userMessage,
                 systemInstruction: GEMINI_SYSTEM_INSTRUCTION,
-            }
+            }),
         });
 
-        const reply = response.text || "I'm having trouble connecting to the AI brain right now. Please try again later.";
+        // Use generateContent with system instruction
+        if (!response.ok) {
+            throw new Error(`Gemini request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const reply = (data && typeof data.text === 'string' && data.text.trim())
+            ? data.text
+            : "I'm having trouble connecting to the AI brain right now. Please try again later.";
         
         setMessages(prev => [...prev, { role: 'model', text: reply }]);
     } catch (error) {
@@ -148,7 +150,7 @@ const ChatBot: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyPress}
-                    placeholder="Ask about Hassam's skills..."
+                    placeholder="Ask about Rafael's skills..."
                     className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white pl-4 pr-12 py-3 rounded-xl border border-slate-300 dark:border-slate-600 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
                     disabled={isLoading}
                 />
@@ -162,7 +164,7 @@ const ChatBot: React.FC = () => {
             </div>
             <div className="text-center mt-2">
                 <p className="text-[10px] text-slate-500">
-                    Powered by Gemini 2.5 Flash 
+                    Powered by Gemini 2.5 Flash Lite
                 </p>
             </div>
           </div>

@@ -98,7 +98,7 @@ const EDUCATION_DATA_EN: Education[] = [
     location: "California, USA",
     gpa: "Immersion",
     achievements: [
-      "Six months of formal study",
+      "12 months of formal study",
       "English immersion environment"
     ]
   }
@@ -129,11 +129,25 @@ const VOLUNTEER_DATA_EN: VolunteerExperience[] = [
 ];
 
 const EXPERIENCE_DATA_EN: Experience[] = [
+ 
+ {
+  id: "0",
+    role: "Software Engineer",
+    company: "AfterQuery Experts",
+    period: "Sep 2025 – Present",
+    location: "San Francisco, CA",
+    description: [
+      "Designing multi-step command-line development exercises focused on debugging, refactoring, and data processing.",
+      "Building deterministic test suites and containerized environments with Docker for reproducibility.",
+      "Writing clear, comprehensive technical documentation outlining objectives, workflows, and requirements.",
+      "Supporting the reliability and automation of CI/CD and development pipelines across diverse tech stacks."
+    ]
+  },
   {
     id: "1",
     role: "Researcher (AI Engineer)",
     company: "ISI-SENAI (Innovation Senai Institute)",
-    period: "Apr 2024 – Present",
+    period: "Apr 2025 – Present",
     location: "Brazil",
     description: [
       "Developing AI solutions for industry utilizing Generative AI and Large Language Models.",
