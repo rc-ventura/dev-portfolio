@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleTheme }) => {
           <div className="flex-shrink-0 flex items-center gap-2">
             <Code2 className="h-8 w-8 text-cyan-600 dark:text-cyan-400" />
             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">
-              DevPortfolio
+              
             </span>
           </div>
           
